@@ -26,10 +26,10 @@ class Injector {
     getIt.registerLazySingleton<String>(
       () {
         if (flavor == Flavor.development) {
-          return 'https://63f8ba616978b1f9105fb041.mockapi.io/';
+          return const String.fromEnvironment('API_BASE_URL_LOCAL');
         }
 
-        return 'https://63f8ba616978b1f9105fb041.mockapi.io/';
+        return const String.fromEnvironment('API_BASE_URL_REMOTE');
       },
       instanceName: 'baseUrl',
     );
