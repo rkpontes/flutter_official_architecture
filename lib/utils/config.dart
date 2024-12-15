@@ -1,7 +1,5 @@
 import 'package:flutter_oficial_architecture/utils/enums.dart';
 
-import '../injector.dart';
-
 class Config {
   final Flavor flavor;
 
