@@ -97,7 +97,7 @@ Contains utility classes and helper functions used throughout the application.
    ```
 2. Run the app:
    ```bash
-   flutter run
+   flutter run --dart-define-from-file=.env
    ```
 
 ### Run Tests

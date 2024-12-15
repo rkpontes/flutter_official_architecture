@@ -5,6 +5,7 @@ class BookTileWidget extends StatelessWidget {
   const BookTileWidget({
     super.key,
     required this.book,
+    this.onTap,
     this.onEdit,
     this.onDelete,
   });
@@ -12,6 +13,7 @@ class BookTileWidget extends StatelessWidget {
   final Book book;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class BookTileWidget extends StatelessWidget {
     return Column(
       children: [
         ListTile(
+          onTap: onTap,
           leading: Image.network(book.image ?? ''),
           title: Text(
             book.title ?? '',

@@ -1,5 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_oficial_architecture/domain/models/book/book.dart';
+import 'package:flutter_oficial_architecture/ui/add_update/widgets/add_update_screen.dart';
+import 'package:flutter_oficial_architecture/ui/show/widgets/show_screen.dart';
 
 // Package imports:
 import 'package:get_it/get_it.dart';
@@ -20,6 +23,14 @@ GoRouter get router {
       GoRoute(
         path: Routes.home,
         builder: (_, state) => HomeScreen(viewModel: GetIt.I<HomeViewModel>()),
+      ),
+      GoRoute(
+        path: Routes.addUpdate,
+        builder: (_, state) => AddUpdateScreen(book: state.extra as Book?),
+      ),
+      GoRoute(
+        path: Routes.show,
+        builder: (_, state) => ShowScreen(book: state.extra as Book?),
       ),
     ],
   );

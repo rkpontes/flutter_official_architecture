@@ -1,10 +1,15 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_oficial_architecture/data/services/local_storage/local_storage.dart';
 import 'package:flutter_oficial_architecture/domain/models/book/book.dart';
+import 'package:flutter_oficial_architecture/routing/routes.dart';
 
 // Project imports:
 import 'package:flutter_oficial_architecture/ui/home/view_models/home_view_model.dart';
 import 'package:flutter_oficial_architecture/ui/home/widgets/book_tile_widget.dart';
+import 'package:flutter_oficial_architecture/utils/config.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -19,6 +24,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final config = GetIt.I<Config>();
+
   @override
   void initState() {
     super.initState();
@@ -43,6 +50,13 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Books'),
         actions: [
+          if (config.isDevelopment)
+            IconButton(
+              icon: const Icon(Icons.cleaning_services),
+              onPressed: () {
+                GetIt.I<LocalStorage>().clear();
+              },
+            ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
@@ -105,15 +119,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 final book = widget.viewModel.books[index];
                 return BookTileWidget(
                   book: book,
-                  onEdit: () {
-                    // Here you can create a screen to edit a book and pass it to the function
-                    book.title = 'Edited Book';
-                    widget.viewModel.editingBooksCommand.execute(book);
+                  onTap: () => context.push(Routes.show, extra: book),
+                  onEdit: () async {
+                    var res = await context.push(Routes.addUpdate, extra: book);
+                    if (res != null && res is Book) {
+                      widget.viewModel.editingBooksCommand.execute(res);
+                    }
                   },
-                  onDelete: () {
-                    if (book.id == null) return;
-                    widget.viewModel.deletingBooksCommand.execute(book.id!);
-                  },
+                  onDelete: () => _onDelete(book),
                 );
               },
             );
@@ -121,17 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Here you can create a screen to add a book and pass it to the function
-          final Book mockedBook = Book(
-            createdAt: DateTime.now().toIso8601String(),
-            title: 'Mocked Book',
-            image: 'https://loremflickr.com/640/480/abstract',
-            resume: 'This is a mocked book',
-            slug: 'mocked-book',
-          );
-          widget.viewModel.addingBooksCommand.execute(mockedBook);
-        },
+        onPressed: () => _addOrEditBook(null),
         child: const Icon(Icons.add),
       ),
     );
@@ -159,5 +162,45 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     }
+  }
+
+  Future<void> _addOrEditBook(Book? book) async {
+    var res = await context.push(Routes.addUpdate, extra: book);
+    if (res != null && res is Book) {
+      if (res.id == null) {
+        widget.viewModel.addingBooksCommand.execute(res);
+        return;
+      }
+
+      widget.viewModel.editingBooksCommand.execute(res);
+    }
+  }
+
+  void _onDelete(Book book) {
+    if (book.id == null) return;
+
+    // open dialog with yes or no
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: const Text('Delete book'),
+          content: const Text('Are you sure you want to delete this book?'),
+          actions: [
+            TextButton(
+              onPressed: context.pop,
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                widget.viewModel.deletingBooksCommand.execute(book.id!);
+                context.pop();
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

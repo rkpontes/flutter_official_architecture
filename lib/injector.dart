@@ -1,6 +1,7 @@
 // Package imports:
 import 'package:dio/dio.dart';
 import 'package:flutter_oficial_architecture/data/repositories/book/book_repository_local.dart';
+import 'package:flutter_oficial_architecture/utils/config.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,6 +23,9 @@ class Injector {
   static final GetIt getIt = GetIt.instance;
 
   static void configureDependencies({Flavor flavor = Flavor.development}) {
+    // Utils
+    getIt.registerLazySingleton<Config>(() => Config(flavor: flavor));
+
     // Services
     getIt.registerLazySingleton<String>(
       () {
