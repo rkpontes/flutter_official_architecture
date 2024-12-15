@@ -151,6 +151,7 @@
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
+				DCAC51152D0E886B00B2619F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -251,7 +252,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build";
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
+		};
+		DCAC51152D0E886B00B2619F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${FLAVOR}\" == \"dev\" ]; then\n  /usr/libexec/PlistBuddy -c \"Set :CFBundleDisplayName 'Books DEV'\" \"${PROJECT_DIR}/Runner/Info.plist\"\nelse\n  /usr/libexec/PlistBuddy -c \"Set :CFBundleDisplayName 'Books'\" \"${PROJECT_DIR}/Runner/Info.plist\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
