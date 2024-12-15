@@ -19,7 +19,7 @@ class Book {
     id = json['id'];
     createdAt = json['createdAt'];
     title = json['title'];
-    image = json['image'];
+    image = "https://loremflickr.com/500/735";
     resume = json['resume'];
     slug = json['slug'];
   }
@@ -29,7 +29,7 @@ class Book {
       "id": id,
       "createdAt": createdAt,
       "title": title,
-      "image": image,
+      "image": "https://loremflickr.com/500/735",
       "resume": resume,
       "slug": slug,
     };
