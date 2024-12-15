@@ -3,24 +3,25 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_oficial_architecture/injector.dart';
+import 'package:logging/logging.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'routing/router.dart';
-import 'main_production.dart' as production;
-import 'main_development.dart' as development;
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Logger.root.level = Level.ALL;
+  Injector.configureDependencies(flavor: flavor);
+  await Injector.getIt.isReady<SharedPreferences>();
+  runApp(const MainApp());
+}
 
-  const flavor = String.fromEnvironment('FLAVOR', defaultValue: 'dev');
-  switch (flavor) {
-    case 'dev':
-      development.main();
-      break;
-    case 'prod':
-      production.main();
-      break;
-  }
+Flavor get flavor {
+  const flavorStr = String.fromEnvironment('FLAVOR', defaultValue: 'dev');
+  debugPrint('Configuring dependencies for flavor: $flavorStr');
+  return flavorStr == 'dev' ? Flavor.development : Flavor.production;
 }
 
 class MainApp extends StatelessWidget {
