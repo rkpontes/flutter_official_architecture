@@ -1,13 +1,11 @@
 // Package imports:
 import 'package:dio/dio.dart';
-import 'package:flutter_oficial_architecture/data/repositories/book/book_repository_local.dart';
-import 'package:flutter_oficial_architecture/utils/config.dart';
-import 'package:flutter_oficial_architecture/utils/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:flutter_oficial_architecture/data/repositories/book/book_repository.dart';
+import 'package:flutter_oficial_architecture/data/repositories/book/book_repository_local.dart';
 import 'package:flutter_oficial_architecture/data/repositories/book/book_repository_remote.dart';
 import 'package:flutter_oficial_architecture/data/services/api_client/api_client.dart';
 import 'package:flutter_oficial_architecture/data/services/api_client/api_client_impl.dart';
@@ -19,6 +17,8 @@ import 'package:flutter_oficial_architecture/domain/use_cases/book/edit_book_use
 import 'package:flutter_oficial_architecture/domain/use_cases/book/get_book_usecase.dart';
 import 'package:flutter_oficial_architecture/domain/use_cases/book/list_books_usecase.dart';
 import 'package:flutter_oficial_architecture/ui/home/view_models/home_view_model.dart';
+import 'package:flutter_oficial_architecture/utils/config.dart';
+import 'package:flutter_oficial_architecture/utils/enums.dart';
 
 class Injector {
   static final GetIt getIt = GetIt.instance;

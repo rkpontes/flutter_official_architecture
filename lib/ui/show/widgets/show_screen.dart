@@ -1,5 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
 import '../../../domain/models/book/book.dart';
 
 class ShowScreen extends StatefulWidget {

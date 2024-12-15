@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_oficial_architecture/injector.dart';
-import 'package:flutter_oficial_architecture/utils/enums.dart';
 import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
+import 'package:flutter_oficial_architecture/injector.dart';
+import 'package:flutter_oficial_architecture/utils/enums.dart';
 import 'routing/router.dart';
 
 void main() async {

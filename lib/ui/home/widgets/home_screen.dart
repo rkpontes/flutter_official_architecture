@@ -1,15 +1,17 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
+
+// Project imports:
 import 'package:flutter_oficial_architecture/data/services/local_storage/local_storage.dart';
 import 'package:flutter_oficial_architecture/domain/models/book/book.dart';
 import 'package:flutter_oficial_architecture/routing/routes.dart';
-
-// Project imports:
 import 'package:flutter_oficial_architecture/ui/home/view_models/home_view_model.dart';
 import 'package:flutter_oficial_architecture/ui/home/widgets/book_tile_widget.dart';
 import 'package:flutter_oficial_architecture/utils/config.dart';
-import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({

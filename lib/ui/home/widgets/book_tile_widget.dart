@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:flutter_oficial_architecture/domain/models/book/book.dart';
 
 class BookTileWidget extends StatelessWidget {

@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:flutter_oficial_architecture/utils/enums.dart';
 
 class Config {
