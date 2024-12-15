@@ -2,6 +2,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_oficial_architecture/data/repositories/book/book_repository_local.dart';
 import 'package:flutter_oficial_architecture/utils/config.dart';
+import 'package:flutter_oficial_architecture/utils/enums.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -80,5 +81,3 @@ class Injector {
         ));
   }
 }
-
-enum Flavor { development, production }
