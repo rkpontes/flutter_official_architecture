@@ -57,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: const Icon(Icons.cleaning_services),
               onPressed: () {
                 GetIt.I<LocalStorage>().clear();
+                widget.viewModel.loadingBooksCommand.execute();
               },
             ),
           IconButton(
