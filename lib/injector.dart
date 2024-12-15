@@ -40,7 +40,7 @@ class Injector {
         () => ApiClientImpl(getIt.get<Dio>()));
 
     getIt.registerLazySingletonAsync<SharedPreferences>(
-        () => SharedPreferences.getInstance());
+        () async => SharedPreferences.getInstance());
 
     getIt.registerLazySingleton<LocalStorage>(
         () => LocalStorageImpl(getIt.get<SharedPreferences>()));

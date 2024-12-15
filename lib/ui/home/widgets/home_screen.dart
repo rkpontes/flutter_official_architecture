@@ -124,7 +124,6 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           // Here you can create a screen to add a book and pass it to the function
           final Book mockedBook = Book(
-            // "2024-12-14T17:05:29.314Z"
             createdAt: DateTime.now().toIso8601String(),
             title: 'Mocked Book',
             image: 'https://loremflickr.com/640/480/abstract',

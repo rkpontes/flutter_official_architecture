@@ -36,4 +36,13 @@ class LocalStorageImpl implements LocalStorage {
       throw LocalStorageException('Error saving key: $key');
     }
   }
+
+  @override
+  Future<void> clear() async {
+    try {
+      await sharedPreferences.clear();
+    } catch (e) {
+      throw LocalStorageException('Error clearing storage');
+    }
+  }
 }

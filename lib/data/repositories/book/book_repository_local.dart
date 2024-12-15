@@ -12,14 +12,18 @@ class BookRepositoryLocal extends BookRepository {
   final label = 'books';
 
   Future<List<Map<String, dynamic>>> _getBooksList() async {
-    final books = await _storage.read(label) ?? '[]';
-    return jsonDecode(books);
+    final books = await _storage.read(label);
+    if (books == null) {
+      return [];
+    }
+    return List<Map<String, dynamic>>.from(jsonDecode(books));
   }
 
   @override
   Future<void> addBook(Book book) async {
     try {
       final booksList = await _getBooksList();
+      book.id ??= (booksList.length + 1).toString();
       booksList.add(book.toJson());
       await _storage.save(label, jsonEncode(booksList));
     } on LocalStorageException {
