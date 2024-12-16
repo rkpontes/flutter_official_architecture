@@ -59,9 +59,8 @@ Contains utility classes and helper functions used throughout the application.
 
 ### Other Key Files
 
-- **`injector.config.dart`**: Configuration for dependency injection using `get_it`.
-- **`main_production.dart`**: The entry point for production builds.
-- **`main.dart`**: The default entry point for development and testing.
+- **`injector.dart`**: Configuration for dependency injection using `get_it`.
+- **`main.dart`**: The starter file.
 
 ---
 
