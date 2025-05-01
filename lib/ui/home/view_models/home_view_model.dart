@@ -39,7 +39,6 @@ class HomeViewModel {
   List<Book> get books => _books;
 
   Future<Result> _load() async {
-    await Future.delayed(const Duration(seconds: 1));
     final result = await _listBooksUsecase.execute();
     switch (result) {
       case Ok<List<Book>>():

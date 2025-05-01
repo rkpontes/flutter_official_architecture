@@ -13,7 +13,7 @@ class ListBooksUsecase {
     try {
       final books = await _bookRepository.getBooks();
       return Result.ok(books);
-    } on AppException catch (e) {
+    } on AppGenericException catch (e) {
       return Result.error(e);
     }
   }
