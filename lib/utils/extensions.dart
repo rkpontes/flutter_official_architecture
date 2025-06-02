@@ -88,12 +88,26 @@ extension GoRouterX on BuildContext {
     );
   }
 
-  void replace(String path) {
-    GoRouter.of(this).replace(path);
+  void replace(String path, {Object? extra}) {
+    GoRouter.of(this).replace(path, extra: extra);
   }
 
-  void push(String path) {
-    GoRouter.of(this).push(path);
+  void push(String path, {Object? extra}) {
+    GoRouter.of(this).push(path, extra: extra);
+  }
+
+  void pushNamed(
+    String name, {
+    Map<String, String> pathParameters = const <String, String>{},
+    Map<String, dynamic> queryParameters = const <String, dynamic>{},
+    Object? extra,
+  }) {
+    GoRouter.of(this).pushNamed(
+      name,
+      pathParameters: pathParameters,
+      queryParameters: queryParameters,
+      extra: extra,
+    );
   }
 
   void pop<T extends Object?>([T? result]) {
