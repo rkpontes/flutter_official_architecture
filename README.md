@@ -1,120 +1,95 @@
 # Flutter Official Architecture
 
-## Overview
-This case study explores how to structure the architecture of a Flutter application, focusing on separation of concerns, state management, and unidirectional data flow. It presents strategies for building a scalable, testable, and extensible application, illustrating how to apply general architectural principles in the context of Flutter.
+Este projeto passa a seguir como referência o guia oficial do Flutter para arquitetura de aplicações:
 
-The guide covers:
+- https://docs.flutter.dev/app-architecture/guide
+- https://docs.flutter.dev/app-architecture/case-study
 
-- Separation of concerns: The clear division between layers, such as UI logic and business logic, using a layered architecture.
+O objetivo é manter uma base escalável, testável e previsível, com separação explícita entre UI e Data layer, uso de MVVM na camada de apresentação e fluxo de dados unidirecional.
 
-- State management: How to ensure predictable and organized data flow through immutable state.
+## Princípios adotados
 
-- Single source of truth: Centralized data structures to synchronize the UI and backend.
+- Separação de responsabilidades entre UI, domínio e dados.
+- Views e ViewModels com relação 1:1 por feature.
+- Repositories como source of truth dos dados da aplicação.
+- Services como wrappers stateless de APIs externas e storage.
+- Modelos de domínio imutáveis sempre que possível.
+- Commands para encapsular ações assíncronas iniciadas pela UI.
+- Testes separados por camada.
 
-- Extensibility and testability: Building a modular design that makes it easy to add functionality and comprehensive testing.
+## Estrutura do projeto
 
-The concepts are contextualized through a practical example that demonstrates how these practices help address common challenges such as modularity, reusability, and code consistency.
+Atualmente o projeto está organizado assim:
 
-The goal is to provide insights on how to improve the development experience and robustness of the application, aligning with best practices recommended by the Flutter community and the mobile application development industry.
+```text
+lib/
+  data/
+    repositories/
+    services/
+  domain/
+    models/
+    use_cases/
+  routing/
+  ui/
+    add_update/
+    home/
+      view_models/
+      widgets/
+    show/
+  utils/
+  injector.dart
+  main.dart
+```
 
-[More details](https://docs.flutter.dev/app-architecture/case-study)
+Essa estrutura segue parcialmente a recomendação oficial:
 
----
+- `ui/` concentra views e view models por feature.
+- `data/` concentra repositories e services por tipo.
+- `domain/` concentra models e use cases.
 
-## Project Structure
+## Aderência ao guia oficial
 
-### `lib/`
-The `lib` folder is the core of the project, divided into several key directories:
+O projeto já está alinhado com estes pontos do guia:
 
-#### 1. `data/`
-Responsible for data handling, including fetching data from APIs or other sources and providing it to the domain layer.
+- Separação entre UI layer e Data layer.
+- Uso de repositories e services.
+- Uso de views e view models.
+- Uso de `go_router` para navegação.
+- Uso de commands para eventos assíncronos da UI.
+- Presença de testes por camada.
 
-- **`repositories/`**: Contains implementations of repository interfaces defined in the domain layer.
-- **`services/`**: Holds external services such as API clients or local storage interfaces.
+Diferenças atuais em relação ao guia/case study:
 
-#### 2. `domain/`
-Encapsulates the core business logic of the application.
+- A injeção de dependência está implementada com `get_it`, enquanto o case study oficial usa `provider`.
+- Existe uma camada de domínio com `use_cases`, que no guia é opcional e recomendada apenas quando a complexidade justificar.
+- Nem todo ViewModel expõe estado via `ChangeNotifier`; hoje os `Command`s usam `ChangeNotifier`, mas os ViewModels ainda podem evoluir para se aproximar mais do padrão do case study oficial.
 
-- **`models/`**: Defines the entities and data models used across the domain.
-- **`use_cases/`**: Contains classes that implement specific business rules or operations.
+Essas diferenças são conscientes e devem ser consideradas em futuras refatorações.
 
-#### 3. `routing/`
-Manages the navigation system and route definitions.
+## Documentação complementar
 
-- **`router.dart`**: Configures the routing logic using `go_router`.
-- **`routes.dart`**: Defines named routes and their parameters.
+As decisões de arquitetura e o mapeamento detalhado para o guia oficial estão em:
 
-#### 4. `ui/`
-Houses all presentation-related code, including views, widgets, and state management.
+- [docs/architecture.md](docs/architecture.md)
 
-- **`home/view_models/`**: Contains classes that manage the state and logic for the home screen.
-- **`home/widgets/`**: Includes reusable UI components for the home screen.
+## Dependências principais
 
-#### 5. `utils/`
-Contains utility classes and helper functions used throughout the application.
+- `flutter`
+- `go_router`
+- `dio`
+- `shared_preferences`
+- `logging`
+- `get_it`
 
-- **`command.dart`**: Provides a command pattern implementation.
-- **`exceptions.dart`**: Defines custom exception classes.
-- **`result.dart`**: Implements a result pattern for handling operations with success or failure outcomes.
+## Como executar
 
-### Other Key Files
+```bash
+flutter pub get
+flutter run --dart-define-from-file=.env
+```
 
-- **`injector.dart`**: Configuration for dependency injection using `get_it`.
-- **`main.dart`**: The starter file.
+## Como testar
 
----
-
-## Dependencies
-
-### Core Dependencies
-- `flutter`: The Flutter SDK.
-- `flutter_localizations`: For supporting internationalization (i18n).
-- `go_router`: Simplifies navigation and routing.
-- `intl`: Provides tools for internationalization and localization.
-- `logging`: Enables structured logging.
-- `get_it`: A lightweight service locator for dependency injection.
-- `shared_preferences`: For storing key-value pairs locally.
-- `dio`: A powerful HTTP client for handling API requests.
-- `import_sorter`: Organizes imports for better readability.
-
-### Dev Dependencies
-- `flutter_test`: For writing and running unit tests.
-- `integration_test`: For end-to-end testing.
-- `flutter_lints`: Ensures adherence to Flutter's best practices.
-
----
-
-## Getting Started
-
-### Prerequisites
-- Flutter SDK >= 3.4.1 < 4.0.0
-
-### Run the Project
-1. Install dependencies:
-   ```bash
-   flutter pub get
-   ```
-2. Run the app:
-   ```bash
-   flutter run --dart-define-from-file=.env
-   ```
-
-### Run Tests
-To execute unit and integration tests, use:
 ```bash
 flutter test
 ```
-
----
-
-## Contributing
-We welcome contributions to this project. Please follow these guidelines:
-1. Fork the repository and create a feature branch.
-2. Make your changes and write tests if applicable.
-3. Open a pull request with a clear description of your changes.
-
----
-
-## License
-This project is licensed under the MIT License.
-
